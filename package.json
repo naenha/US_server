@@ -1,0 +1,39 @@
+{
+  "name": "us",
+  "version": "1.0.0",
+  "description": "US",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asd3638/US_server.git"
+  },
+  "author": "lee daon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asd3638/US_server/issues"
+  },
+  "homepage": "https://github.com/asd3638/US_server#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.3",
+    "mysql2": "^2.3.2",
+    "nunjucks": "^3.2.3",
+    "passport": "^0.5.0",
+    "passport-kakao": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.8.0",
+    "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
