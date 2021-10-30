@@ -2,15 +2,15 @@ const express = require('express')
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const path = require('path');
-const session = require('express-session');
+//const session = require('express-session');
 const nunjucks = require('nunjucks');
-const sequelize = require('sequelize')
+//const sequelize = require('sequelize')
 const dotenv = require('dotenv');
 const passport = require('passport');
 const port = 8080
 
 dotenv.config();
-//const { sequelize } = require('./models');
+const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
 const app = express()
@@ -23,6 +23,16 @@ nunjucks.configure('views', {
   watch: true,
 });
 
+sequelize.sync({ force: false })
+  .then(() => {
+    console.log('데이터베이스 연결 성공');
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+
+
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
@@ -31,7 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
+/*app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
@@ -39,11 +49,12 @@ app.use(session({
     httpOnly: true,
     secure: false,
   },
-}));
+}));*/
 
-app.use('/', pageRouter);
-
-
+//app.use('/', pageRouter);
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 
 app.use((req, res, next) => {
@@ -57,31 +68,6 @@ app.use((err, req, res, next) => {
   res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
   res.status(err.status || 500);
 });
-
-app.listen(app.get('port'), () => {
-  console.log(app.get('port'), '번 포트에서 대기중');
-});
-
-
-sequelize.sync({ force: false })
-  .then(() => {
-    console.log('데이터베이스 연결 성공');
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-
-
-
-
-
-
-
-
-/*app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-*/
 
 
 app.listen(port, () => {
