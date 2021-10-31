@@ -10,6 +10,10 @@ const passport = require('passport');
 const port = 8080
 
 dotenv.config();
+
+//router
+const authRouter = require('./routes/auth');
+
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
@@ -56,6 +60,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
@@ -68,7 +73,6 @@ app.use((err, req, res, next) => {
   res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
   res.status(err.status || 500);
 });
-
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
