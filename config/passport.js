@@ -69,8 +69,6 @@ passport.use(
         console.error(err);
         done(err);
       }
-
-
       
     }
   )
