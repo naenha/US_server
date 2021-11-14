@@ -4,7 +4,6 @@ var passport = require("passport");
 var session = require("express-session");
 const { sequelize } = require("./models");
 
-app.set("view engine", "ejs");
 app.use(
   session({ secret: "MySecret", resave: false, saveUninitialized: true })
 );

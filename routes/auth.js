@@ -2,24 +2,27 @@ var express = require("express");
 var router = express.Router();
 var passport = require("../config/passport.js");
 
-router.get("/login", function (req, res) {
-  res.render("auth/login");
-});
+/*
+ * GOOGLE LOGIN
+ */
 
-router.get("/logout", function (req, res) {
-  req.logout();
-  res.redirect("/");
-});
-
-router.get(
-  "/google",
+router.get("/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-router.get("/google/callback", passport.authenticate("google"), authSuccess);
+router.get("/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "http://localhost:3000/check",
+  }),
+  function (req, res) {
+    const token = {
+      accessToken: req.authInfo.dataValues.accessToken,
+      email: req.authInfo.dataValues.email,
+    };
 
-function authSuccess(req, res) {
-  res.redirect("http://localhost:3000/");
-}
+  res.redirect(`http://localhost:3000/check?accessToken=${token.accessToken}`);
+    
+  }
+);
 
 module.exports = router;
