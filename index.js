@@ -8,6 +8,9 @@ app.use(
   session({ secret: "MySecret", resave: false, saveUninitialized: true })
 );
 
+app.use(express.urlencoded({extended:true})); 
+app.use(express.json());
+
 sequelize
   .sync({ force: false })
   .then(() => {
