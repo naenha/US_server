@@ -15,15 +15,10 @@ module.exports = class Chat extends Sequelize.Model {
           type: Sequelize.TEXT,
           allowNull: true,
       },
-      createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW
-      }
       
     }, {
       sequelize,
-      timestamps: false,
+      timestamps: true,
       underscored: false,
       modelName: 'Chat',
       tableName: 'chats',

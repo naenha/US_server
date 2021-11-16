@@ -24,6 +24,7 @@ app.use(passport.session());
 // Routes
 app.use("/", require("./routes/main"));
 app.use("/auth", require("./routes/auth"));
+app.use("/question", require("./routes/question"));
 
 // Port setting
 var port = 8080;
