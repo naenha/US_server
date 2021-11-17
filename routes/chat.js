@@ -1,23 +1,37 @@
 const express = require("express");
 const router = express.Router();
 const { Chat } = require('../models');
+const moment = require('moment');
 
-
-//mypage 출력
-//날짜별로..!!
-router.get("/:id", async (req, res) => {
+//url로 넘어온 date와 일치하는 일기를 보내준다.
+router.get("/", async (req, res) => {
 
     try{
+        const user_id = req.query.user_id;
+        const date = req.query.date 
+
         const content = await Chat.findAll({
-            where: {user_id : req.params.id}
+            where: {user_id : user_id}
           })
 
-        //console.log(content[0].id);
-        res.send(content)
+        if (content.length != 0 ){
+          const new_date = moment(content[0].createdAt).format('YYYYMMDD');
+        
+          if (new_date === date){
+              res.send(content);
+          }
+          else {
+            res.send("no diary with this date")
+          }
+
+        }
+        else {
+          res.send("no diary with this user_id")
+        }
+  
 
     } catch(err){
         console.log(err);
-        next(err);
     }
     
 });
