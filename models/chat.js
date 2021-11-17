@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const moment = require('moment');
 
 module.exports = class Chat extends Sequelize.Model {
   static init(sequelize) {
@@ -15,6 +16,12 @@ module.exports = class Chat extends Sequelize.Model {
           type: Sequelize.TEXT,
           allowNull: true,
       },
+      /*DateTime: {
+        type: Sequelize.DATEONLY,
+        get: function() {
+           return moment(this.getDataValue('DateTime')).format('YYYYDDMM')
+        }
+      }*/
       
     }, {
       sequelize,
