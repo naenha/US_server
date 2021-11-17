@@ -29,6 +29,7 @@ app.use("/", require("./routes/main"));
 app.use("/auth", require("./routes/auth"));
 app.use("/api/question", require("./routes/question"));
 app.use("/api/chat", require("./routes/chat"));
+app.use("/api/user", require("./routes/user"));
 
 // Port setting
 var port = 8080;
