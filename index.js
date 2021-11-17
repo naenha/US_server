@@ -2,13 +2,15 @@ var express = require("express");
 var app = express();
 var passport = require("passport");
 var session = require("express-session");
+const cors = require("cors");
+
 const { sequelize } = require("./models");
 
 app.use(
   session({ secret: "MySecret", resave: false, saveUninitialized: true })
 );
-
-app.use(express.urlencoded({extended:true})); 
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 sequelize
