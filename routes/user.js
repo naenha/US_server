@@ -11,7 +11,7 @@ router.get("/:token", async (req, res) => {
     });
     if (userId) {
       const user = await User.findOne({ where: { id: userId.user_id } });
-      console.log(user);
+      //console.log(user);
       return res.send(user);
     }
   } catch (error) {

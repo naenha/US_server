@@ -30,7 +30,7 @@ module.exports = class Chat extends Sequelize.Model {
   }
   
   static associate(db){
-    db.Token.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id'}); 
+    db.Chat.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id'}); 
   } 
 
 };
