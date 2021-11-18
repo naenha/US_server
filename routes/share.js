@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Share, User } = require('../models');
-const moment = require('moment');
+const { Share, User, Chat } = require('../models');
 
 //공유하기 기능
 router.post('/', async (req, res) => {
@@ -14,7 +13,7 @@ router.post('/', async (req, res) => {
         
         if (user){
             const id = user.id;
-            if (id === req.body.id){
+            if (id === req.body.user_id){
                 res.send("자기 자신에게 공유할 수 없습니다.");
             }
             else{
@@ -27,7 +26,6 @@ router.post('/', async (req, res) => {
                 res.send("saved successfully")
             }
         }
-
         else{
             res.send("no email");
         }
@@ -38,4 +36,21 @@ router.post('/', async (req, res) => {
   });
 
 
+router.get('/', async (req, res) => {
+
+    try {
+        const diary = await Chat.findAll(
+            {
+                where: {id: req.query.user_id}
+            });
+
+            res.send(question[0].question)
+
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+
+  
 module.exports = router;
