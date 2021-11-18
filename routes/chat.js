@@ -42,12 +42,12 @@ router.post('/', async (req, res) => {
 
     try {
         await Chat.create({
-            speaker: "user",
             user_id: req.body.id,
             content: req.body.content,
+            question: req.body.question
         });
 
-        res.status(400).send("saved successfully")
+        res.send("saved successfully")
 
     } catch (error) {
       console.error(error);

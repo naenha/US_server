@@ -4,25 +4,19 @@ const moment = require('moment');
 module.exports = class Chat extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
-      speaker: {
-        type: Sequelize.STRING(10),
-        allowNull: false,
-      },
       user_id: {
         type: Sequelize.INTEGER(15),
         allowNull: false,
+      },
+      question: {
+          type: Sequelize.TEXT,
+          allowNull: true,
       },
       content: {
           type: Sequelize.TEXT,
           allowNull: true,
       },
-      /*DateTime: {
-        type: Sequelize.DATEONLY,
-        get: function() {
-           return moment(this.getDataValue('DateTime')).format('YYYYDDMM')
-        }
-      }*/
-      
+
     }, {
       sequelize,
       timestamps: true,

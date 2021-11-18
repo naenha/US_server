@@ -30,23 +30,5 @@ router.get("/logout/:token", async (req, res) => {
   }
 });
 
-// user 정보 수정
-router.route("/edit/:id")
-      .patch (async (req, res) => {
-        const user_id = req.params.id;
-        const student_id = req.body.student_id;
-        const major = req.body.major;
-
-        try {
-          await User.update({
-            student_id: student_id,
-            major: major
-          }, { where: {id: user_id}});
-          res.send("Updated Successfully");
-        } catch(error) {
-          console.error(error);
-        }
-      })
-
 
 module.exports = router;

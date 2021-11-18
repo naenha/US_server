@@ -15,13 +15,7 @@ router.get('/:id', async (req, res, next) => {
               limit: 1
             });
 
-        await Chat.create({
-            speaker: "bot",
-            user_id: req.params.id,
-            content: question[0].question,
-        });
-
-            res.status(400).send(question[0].question)
+            res.send(question[0].question)
 
     } catch (error) {
       console.error(error);
