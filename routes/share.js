@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
             }
             else{
                 await Share.create({
-                    sending_user: req.body.id,
+                    sending_user: req.body.user_id,
                     getting_user: id,
                     date: req.body.date
                 });
@@ -36,6 +36,7 @@ router.post('/', async (req, res) => {
   });
 
 
+//나에게 공유된 일기 보기
 router.get('/', async (req, res) => {
 
     try {
