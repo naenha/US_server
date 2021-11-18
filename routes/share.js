@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const { Share, User, Chat } = require('../models');
-
+const moment = require('moment');
 
 //공유하기 기능
 router.post('/', async (req, res) => {
@@ -38,19 +38,28 @@ router.post('/', async (req, res) => {
   });
 
 
-//나에게 공유된 일기 보기
+//나에게 공유된 일기 보기(특정 날짜)
 router.get('/', async (req, res) => {
 
     try {
         const date = req.query.date;
         const diary = await Share.findAll(
             {
-                where: {
-                    [Op.and]: [{getting_user: req.query.user_id}, {date: date}]
-                }
+                where: { [Op.and]: [{getting_user: req.query.user_id}, {date: date}]},
+                attributes: ["sending_user", "date"]
             });
         
-
+        if (diary.length != 0 ) {
+            for (var i = 0; i < diary.length; i++){
+                const conv = await Chat.findOne({
+                    where: { [Op.and]: [{id: diary[i].sending_user}, {date: diary[i].date}]},
+                    attributes: ["sending_user", "date"]
+                })
+            }
+        }
+        else {
+            res.send("no diary")
+        }
                 
 
     } catch (error) {

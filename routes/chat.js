@@ -66,19 +66,22 @@ router.get("/", async (req, res) => {
             where: {user_id : user_id}
           })
 
-        if (content.length != 0 ){
-          const new_date = moment(content[0].createdAt).format('YYYYMMDD');
-        
-          if (new_date === date){
-              res.send(content);
-          }
-          else {
-            res.send("no diary with this date")
-          }
+        const diary = [];
 
+        if (content.length != 0 ){
+          for (var i = 0; i < content.length; i++){
+            var date_formatted = moment(content[i].createdAt).format('YYYYMMDD');
+            
+            //날짜가 같은지 비교
+            if (date_formatted === date){
+              diary.push(content[i]);
+            }
+          }
+          res.send(diary);
+        
         }
         else {
-          res.send("no diary with this user_id")
+          res.send("no diary")
         }
   
 
