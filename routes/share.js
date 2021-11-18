@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const { Op } = require("sequelize");
 const { Share, User, Chat } = require('../models');
+
 
 //공유하기 기능
 router.post('/', async (req, res) => {
@@ -40,12 +42,16 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
 
     try {
-        const diary = await Chat.findAll(
+        const date = req.query.date;
+        const diary = await Share.findAll(
             {
-                where: {id: req.query.user_id}
+                where: {
+                    [Op.and]: [{getting_user: req.query.user_id}, {date: date}]
+                }
             });
+        
 
-            res.send(question[0].question)
+                
 
     } catch (error) {
       console.error(error);

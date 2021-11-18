@@ -34,7 +34,10 @@ router.get("/all", async (req, res) => {
               var date_formatted = moment(date_list[i]).format('YYYYMMDD');
               data.push(date_formatted);
             }
-            res.send(data);
+            
+            //중복 제거
+            const set = Array.from(new Set(data));
+            res.send(set);
           }
           else {
             res.send("no diary this month")
