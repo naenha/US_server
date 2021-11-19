@@ -7,8 +7,8 @@ const moment = require('moment');
 router.get("/all", async (req, res) => {
 
   try{
-      const date = req.query.date;
-      const month = date.substring(4,6);
+      // const date = req.query.date;
+      // const month = date.substring(4,6);
       const user_id = req.query.user_id;
 
       const content = await Chat.findAll({
@@ -16,32 +16,41 @@ router.get("/all", async (req, res) => {
           attributes: ["createdAt"]
         })
 
-      const date_list = []; 
+
+      
+      //const date_list = []; 
       const data = [];
 
       //해당 id가 쓴 일기가 존재하면
       if (content.length != 0 ){
-          for (var i = 0; i < content.length; i++){
-            var new_month = moment(content[i].createdAt).format('MM');
-            if (new_month === month){
-              date_list.push(content[i].createdAt);
-            }
-          }
+          // for (var i = 0; i < content.length; i++){
+          //   var new_month = moment(content[i].createdAt).format('MM');
+          //   if (new_month === month){
+          //     date_list.push(content[i].createdAt);
+          //   }
+          // }
           
-          // 그 달에 쓴 일기가 있는 경우
-          if (date_list.length != 0){
-            for (var i = 0; i < date_list.length; i++){
-              var date_formatted = moment(date_list[i]).format('YYYYMMDD');
-              data.push(date_formatted);
-            }
+          // // 그 달에 쓴 일기가 있는 경우
+          // if (date_list.length != 0){
+          //   for (var i = 0; i < date_list.length; i++){
+          //     var date_formatted = moment(date_list[i]).format('YYYYMMDD');
+          //     data.push(date_formatted);
+          //   }
             
-            //중복 제거
-            const set = Array.from(new Set(data));
-            res.send(set);
-          }
-          else {
-            res.send("no diary this month")
-          }
+          //   //중복 제거
+          //   const set = Array.from(new Set(data));
+          //   res.send(set);
+          // }
+          // else {
+          //   res.send("no diary this month")
+          // }
+          for (var i = 0; i < content.length; i++){
+              var date_formatted = moment(content[i].createdAt).format('YYYYMMDD');
+              data.push(date_formatted);
+              }
+
+          const set = Array.from(new Set(data));
+          res.send(set);
 
       }
       else {

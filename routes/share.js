@@ -80,45 +80,45 @@ router.get('/', async (req, res) => {
   });
 
 
-// 그 달에 공유된 일기가 있는지
+// 공유된 일기가 있는지
   router.get("/all", async (req, res) => {
 
     try{
-        const date = req.query.date;
-        const month = date.substring(4,6);
+        // const date = req.query.date;
+        // const month = date.substring(4,6);
         const user_id = req.query.user_id;
 
         const share = await Share.findAll(
             {
-                where:  {getting_user: req.query.user_id },
-                attributes: ["sending_user", "date"]
+                where:  {getting_user: user_id },
+                attributes: ["date"]
             });
 
-        const date_list = []; 
-        const data = [];
+        // const date_list = []; 
+        // const data = [];
   
         //나에게 공유된 일기가 존재하면
         if (share.length != 0 ){
-            for (var i = 0; i < share.length; i++){
+            // for (var i = 0; i < share.length; i++){
                 //console.log(String(share[i].date).substring(4,6), month)
-              if (String(share[i].date).substring(4,6) == month){
-                date_list.push(share[i].date);
-              }
-            }
-            
+            //   if (String(share[i].date).substring(4,6) == month){
+            //     date_list.push(share[i].date);
+            //   }
+            // }
+            res.send(share);
             // 그 달에 쓴 일기가 있는 경우
-            if (date_list.length != 0){
-              for (var i = 0; i < date_list.length; i++){
-                data.push(date_list[i]);
-              }
+            // if (date_list.length != 0){
+            //   for (var i = 0; i < date_list.length; i++){
+            //     data.push(date_list[i]);
+            //   }
               
-              //중복 제거
-              const set = Array.from(new Set(data));
-              res.send(set);
-            }
-            else {
-              res.send("no diary this month")
-            }
+            //   //중복 제거
+            //   const set = Array.from(new Set(data));
+            //   res.send(set);
+            // }
+            // else {
+            //   res.send("no diary this month")
+            // }
   
         }
         else {
