@@ -94,27 +94,22 @@ router.get('/', async (req, res) => {
                 attributes: ["sending_user", "date"]
             });
 
-        const content = await Chat.findAll({
-            where: {user_id : user_id},
-            attributes: ["createdAt"]
-          })
-  
         const date_list = []; 
         const data = [];
   
         //나에게 공유된 일기가 존재하면
         if (share.length != 0 ){
-            for (var i = 0; i < content.length; i++){
-              if (moment(content[i].createdAt).format('MM') === month){
-                date_list.push(content[i].createdAt);
+            for (var i = 0; i < share.length; i++){
+                //console.log(String(share[i].date).substring(4,6), month)
+              if (String(share[i].date).substring(4,6) == month){
+                date_list.push(share[i].date);
               }
             }
             
             // 그 달에 쓴 일기가 있는 경우
             if (date_list.length != 0){
               for (var i = 0; i < date_list.length; i++){
-                var date_formatted = moment(date_list[i]).format('YYYYMMDD');
-                data.push(date_formatted);
+                data.push(date_list[i]);
               }
               
               //중복 제거
