@@ -8,6 +8,10 @@ module.exports = class Chat extends Sequelize.Model {
         type: Sequelize.INTEGER(15),
         allowNull: false,
       },
+      nickname: {
+        type: Sequelize.STRING(15),
+        allowNull: true,
+      },
       question: {
           type: Sequelize.TEXT,
           allowNull: true,

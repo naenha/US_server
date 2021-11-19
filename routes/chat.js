@@ -98,6 +98,7 @@ router.post('/', async (req, res) => {
     try {
         await Chat.create({
             user_id: req.body.user_id,
+            nickname: req.body.nickname,
             content: req.body.content,
             question: req.body.question
         });

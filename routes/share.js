@@ -39,7 +39,6 @@ router.post('/', async (req, res) => {
 
 
 //나에게 공유된 일기 보기(특정 날짜)
-//미완!!!!
 router.get('/', async (req, res) => {
 
     try {
@@ -53,15 +52,10 @@ router.get('/', async (req, res) => {
         //내 아이디와 해당날짜에 공유된 일기가 있다면
         if (share.length != 0) {
 
-            const name_list = [];
             const chat_list = [];
 
             for (var i = 0; i < share.length; i++){
-                var name = await User.findOne({
-                    where: { id: share[i].sending_user },
-                    attributes: ["nickname"]
-                })
-                name_list.push(name);
+
 
                 var chat = await Chat.findAll({
                     where: { user_id: share[i].sending_user },
@@ -69,26 +63,17 @@ router.get('/', async (req, res) => {
 
 
                 for (var j = 0; j < chat.length; j++){
-                    //chat[j].createdAt = moment(chat[j].createdAt).format('YYYYMMDD');
-                    //console.log(moment(chat[j].createdAt).format('YYYYMMDD'))
-                    // if (j === chat.length-1){
-                    //     console.log("//////////////////")
-                    // }
                     if (moment(chat[j].createdAt).format('YYYYMMDD') === date){
                         chat_list.push(chat[j]);
                     }
                 }
 
             }
-
-            res.send(chat_list);
-            
-        }
+            res.send(chat_list); 
+        }    
         else {
             res.send("no shared diary")
         }
-                
-
     } catch (error) {
       console.error(error);
     }

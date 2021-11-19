@@ -11,8 +11,11 @@ router.get("/:token", async (req, res) => {
     });
     if (userId) {
       const user = await User.findOne({ where: { id: userId.user_id } });
-      //console.log(user);
+      
       return res.send(user);
+    }
+    else{
+      res.send("no user");
     }
   } catch (error) {
     console.error(error);
