@@ -80,5 +80,62 @@ router.get('/', async (req, res) => {
   });
 
 
+// 그 달에 공유된 일기가 있는지
+  router.get("/all", async (req, res) => {
+
+    try{
+        const date = req.query.date;
+        const month = date.substring(4,6);
+        const user_id = req.query.user_id;
+
+        const share = await Share.findAll(
+            {
+                where:  {getting_user: req.query.user_id },
+                attributes: ["sending_user", "date"]
+            });
+
+        const content = await Chat.findAll({
+            where: {user_id : user_id},
+            attributes: ["createdAt"]
+          })
+  
+        const date_list = []; 
+        const data = [];
+  
+        //나에게 공유된 일기가 존재하면
+        if (share.length != 0 ){
+            for (var i = 0; i < content.length; i++){
+              if (moment(content[i].createdAt).format('MM') === month){
+                date_list.push(content[i].createdAt);
+              }
+            }
+            
+            // 그 달에 쓴 일기가 있는 경우
+            if (date_list.length != 0){
+              for (var i = 0; i < date_list.length; i++){
+                var date_formatted = moment(date_list[i]).format('YYYYMMDD');
+                data.push(date_formatted);
+              }
+              
+              //중복 제거
+              const set = Array.from(new Set(data));
+              res.send(set);
+            }
+            else {
+              res.send("no diary this month")
+            }
+  
+        }
+        else {
+          res.send("no shared diary")
+        }
+  
+  
+    } catch(err){
+        console.log(err);
+    }
+    
+  });
+
   
 module.exports = router;
