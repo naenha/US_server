@@ -94,18 +94,20 @@ router.get('/', async (req, res) => {
                 attributes: ["date"]
             });
 
-        // const date_list = []; 
+        const date_list = []; 
         // const data = [];
   
         //나에게 공유된 일기가 존재하면
         if (share.length != 0 ){
-            // for (var i = 0; i < share.length; i++){
+            for (var i = 0; i < share.length; i++){
                 //console.log(String(share[i].date).substring(4,6), month)
             //   if (String(share[i].date).substring(4,6) == month){
             //     date_list.push(share[i].date);
             //   }
-            // }
-            res.send(share);
+                date_list.push(share[i].date);
+            }
+            const set = Array.from(new Set(date_list));
+            res.send(set);
             // 그 달에 쓴 일기가 있는 경우
             // if (date_list.length != 0){
             //   for (var i = 0; i < date_list.length; i++){
